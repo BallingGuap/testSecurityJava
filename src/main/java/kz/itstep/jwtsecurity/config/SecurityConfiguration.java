@@ -4,6 +4,7 @@ import kz.itstep.jwtsecurity.config.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,12 +29,12 @@ public class SecurityConfiguration {
                         auth.requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/test/path/**").authenticated()
                                 .requestMatchers("/api/v1/book").permitAll()
-                                .requestMatchers("/api/v1/book/getBooksByDetail/**").permitAll()
-                                .requestMatchers("/api/v1/book/createBook").authenticated()
-                                .requestMatchers("/api/v1/book/updateBook").authenticated()
-                                .requestMatchers("/api/v1/book/deleteBook").authenticated()
-                                .requestMatchers("/api/v1/user/getAdmins").authenticated()
-                                .requestMatchers("/api/v1/user/deleteUser").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/book").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/book").authenticated()
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/book").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/book").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/user").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/user").authenticated()
                                 )
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

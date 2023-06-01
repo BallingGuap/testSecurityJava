@@ -27,7 +27,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
     @PermitAll
-    @GetMapping("/getBooksByDetail/{detail}")
+    @GetMapping("/{detail}")
     public ResponseEntity<List<Object>> authorize(@PathVariable("detail") String detail){
         switch (detail){
             case "Name":
@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
-    @PostMapping("/createBook")
+    @PostMapping
     public ResponseEntity<String> createBook(@RequestBody Book newBook){
         try {
             bookService.createBook(newBook);
@@ -57,7 +57,7 @@ public class BookController {
         }
     }
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
-    @PutMapping("/updateBook")
+    @PutMapping
     public ResponseEntity<String> updateBook(@RequestParam("id") Long id , @RequestBody Book newBook){
         try {
             bookService.updateBook(id, newBook);
@@ -68,7 +68,7 @@ public class BookController {
         }
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/deleteBook")
+    @DeleteMapping
     public ResponseEntity<String> deleteBook( @RequestBody Book book){
         try {
             bookService.deleteBook(book);

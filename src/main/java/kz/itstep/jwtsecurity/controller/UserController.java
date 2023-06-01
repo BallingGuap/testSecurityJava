@@ -18,12 +18,10 @@ import java.util.List;
 public class UserController {
     private final UserService userService ;
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping("/getAdmins")
     public ResponseEntity<List<User>> getAdmins(){
         return ResponseEntity.ok(userService.getAdmins());
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/deleteUser")
     public ResponseEntity<String> deleteUser( @RequestBody User user){
         try {
             userService.deleteUser(user);
